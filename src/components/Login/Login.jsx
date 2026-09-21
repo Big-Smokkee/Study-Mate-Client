@@ -1,6 +1,18 @@
+import { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
+    const { loginWithGoogle } = use(AuthContext);
+    const handleGoogleSignIn = () => {
+        loginWithGoogle()
+            .then(res => {
+                console.log(res.user);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
     return (
         <section className="flex items-center justify-center min-h-screen bg-base-200 px-4">
             <div className="card bg-base-100 w-full max-w-sm shadow-lg rounded-xl border border-base-300">
@@ -53,7 +65,7 @@ const Login = () => {
                         </div>
 
                         {/* Google */}
-                        <button className="btn w-full btn-outline rounded-lg font-medium">
+                        <button className="btn w-full btn-outline rounded-lg font-medium" type="button" onClick={handleGoogleSignIn}>
                             <svg
                                 aria-label="Google logo"
                                 width="16"
