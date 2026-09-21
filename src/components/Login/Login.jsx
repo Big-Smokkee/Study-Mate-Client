@@ -3,9 +3,22 @@ import { Link } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 
 const Login = () => {
-    const { loginWithGoogle } = use(AuthContext);
+    const { loginWithGoogle, loginUserWithEmailAndPassword } = use(AuthContext);
     const handleGoogleSignIn = () => {
         loginWithGoogle()
+            .then(res => {
+                console.log(res.user);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    const handleLoginForm = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        console.log(email, password);
+        loginUserWithEmailAndPassword(email, password)
             .then(res => {
                 console.log(res.user);
             })
@@ -23,12 +36,12 @@ const Login = () => {
                     </h1>
 
                     {/* Form */}
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleLoginForm}>
                         {/* Email */}
                         <div>
                             <label className="label font-medium">Email</label>
                             <input
-                                type="email"
+                                type="email" name="email"
                                 className="input input-bordered w-full rounded-lg focus:ring-2 focus:ring-primary"
                                 placeholder="Enter your email"
                             />
@@ -38,7 +51,7 @@ const Login = () => {
                         <div>
                             <label className="label font-medium">Password</label>
                             <input
-                                type="password"
+                                type="password" name="password"
                                 className="input input-bordered w-full rounded-lg focus:ring-2 focus:ring-primary"
                                 placeholder="Enter your password"
                             />
