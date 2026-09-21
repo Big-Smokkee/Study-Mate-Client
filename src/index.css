@@ -1,0 +1,12 @@
+@import "tailwindcss";
+@plugin "daisyui"{
+  themes: all;
+}
+
+.active {
+  text-decoration: underline !important;
+  text-underline-offset: 6px;
+  font-weight: 600;
+  background-color: var(--fallback-b2, oklch(var(--b2))) !important; /* Theme adaptive background */
+  color: var(--fallback-p, oklch(var(--p))) !important; /* Theme primary text color */
+}
