@@ -1,21 +1,39 @@
 import { use } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
+import Swal from "sweetalert2";
 
 const Register = () => {
-    const { signUpUserWithEmailAndPassword, loginWithGoogle } = use(AuthContext);
+    const { signUpUserWithEmailAndPassword, loginWithGoogle, setUser, updateTheCurrentUser } = use(AuthContext);
     const handleRegister = (e) => {
         e.preventDefault();
         const name = e.target.name.value;
         const email = e.target.email.value;
         const photoURL = e.target.photoURL.value;
         const password = e.target.password.value;
-        const newUser = { name, email, photoURL, password };
-        console.log(newUser);
+        const newUsersUpdatedProfile = { name, photoURL };
+        // console.log(newUsersUpdatedProfile);
 
         signUpUserWithEmailAndPassword(email, password)
             .then(res => {
-                console.log(res.user);
+                updateTheCurrentUser(newUsersUpdatedProfile)
+                    .then(() => {
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: "Your profile has been created",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    })
+                    .catch(() => {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
+                    })
+                setUser(res.user);
             })
             .catch(err => {
                 console.log(err);
@@ -25,8 +43,21 @@ const Register = () => {
         loginWithGoogle()
             .then(res => {
                 console.log(res.user);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Login Successful!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setUser(res.user);
             })
             .catch(err => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
                 console.log(err);
             })
     }

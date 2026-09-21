@@ -1,15 +1,29 @@
 import { use } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
+import Swal from "sweetalert2";
 
 const Login = () => {
-    const { loginWithGoogle, loginUserWithEmailAndPassword } = use(AuthContext);
+    const { loginWithGoogle, loginUserWithEmailAndPassword, setUser } = use(AuthContext);
     const handleGoogleSignIn = () => {
         loginWithGoogle()
             .then(res => {
                 console.log(res.user);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Login Successfull!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setUser(res.user);
             })
             .catch(err => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
                 console.log(err);
             })
     }
@@ -21,8 +35,21 @@ const Login = () => {
         loginUserWithEmailAndPassword(email, password)
             .then(res => {
                 console.log(res.user);
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Login Successfull!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setUser(res.user);
             })
             .catch(err => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
                 console.log(err);
             })
     }
