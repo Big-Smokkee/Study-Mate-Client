@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { auth } from '../firebase/config'
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 
 const AuthProvider = ({ children }) => {
     // here I will write every states
@@ -21,9 +21,19 @@ const AuthProvider = ({ children }) => {
     const signoutAnUser = () => {
         return signOut(auth);
     }
+    const updateTheCurrentUser = (updatedProfileObject) => {
+        return updateProfile(auth.currentUser, updatedProfileObject);
+    }
 
     //observer set
-
+    useEffect(() => {
+        const unSubscribe = onAuthStateChanged(auth, (currenUser) => {
+            setUser(currenUser);
+        })
+        return () => {
+            unSubscribe();
+        }
+    }, [])
     // This is the object which would be passed into the AuthContext 
     const authInfo = {
         user,
@@ -31,7 +41,8 @@ const AuthProvider = ({ children }) => {
         signUpUserWithEmailAndPassword,
         loginWithGoogle,
         loginUserWithEmailAndPassword,
-        signoutAnUser
+        signoutAnUser,
+        updateTheCurrentUser
     }
     return (
         <AuthContext value={authInfo}>
