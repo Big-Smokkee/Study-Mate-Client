@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AuthContext } from './AuthContext';
 import { auth } from '../firebase/config'
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 
 const AuthProvider = ({ children }) => {
     // here I will write every states
@@ -15,6 +15,9 @@ const AuthProvider = ({ children }) => {
     const loginWithGoogle = () => {
         return signInWithPopup(auth, googleProvider);
     }
+    const loginUserWithEmailAndPassword = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password);
+    }
 
     //observer set
 
@@ -23,7 +26,8 @@ const AuthProvider = ({ children }) => {
         user,
         setUser,
         signUpUserWithEmailAndPassword,
-        loginWithGoogle
+        loginWithGoogle,
+        loginUserWithEmailAndPassword
     }
     return (
         <AuthContext value={authInfo}>
