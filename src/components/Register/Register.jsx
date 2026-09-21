@@ -1,10 +1,13 @@
-import { use } from "react";
+import { use, useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 
 const Register = () => {
     const { signUpUserWithEmailAndPassword, loginWithGoogle, setUser, updateTheCurrentUser } = use(AuthContext);
+
+    const [error, setError] = useState("");
+
     const handleRegister = (e) => {
         e.preventDefault();
         const name = e.target.name.value;
@@ -12,37 +15,51 @@ const Register = () => {
         const photoURL = e.target.photoURL.value;
         const password = e.target.password.value;
         const newUsersUpdatedProfile = { name, photoURL };
-        // console.log(newUsersUpdatedProfile);
-
-        signUpUserWithEmailAndPassword(email, password)
-            .then(res => {
-                updateTheCurrentUser(newUsersUpdatedProfile)
-                    .then(() => {
-                        Swal.fire({
-                            position: "top-end",
-                            icon: "success",
-                            title: "Your profile has been created",
-                            showConfirmButton: false,
-                            timer: 1500
-                        });
-                    })
-                    .catch(() => {
-
-                    })
-                setUser(res.user);
-            })
-            .catch(err => {
-                Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: "Something went wrong!",
-                });
-                console.log(err);
-            })
+        //password strong validation
+        const passwordRegex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$/;
+        const validationResult = passwordRegex.test(password);
+        if (!validationResult) {
+            setError("Password must contain at least 1 uppercase letter, 1 lowercase letter, 1 number, and be at least 8 characters long.");
+            return;
+        }
+        else {
+            signUpUserWithEmailAndPassword(email, password)
+                .then(res => {
+                    setError("");
+                    updateTheCurrentUser(newUsersUpdatedProfile)
+                        .then(() => {
+                            Swal.fire({
+                                position: "top-end",
+                                icon: "success",
+                                title: "Your profile has been created",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        })
+                        .catch(() => {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Oops...",
+                                text: "Something went wrong!",
+                            });
+                        })
+                    setUser(res.user);
+                    e.target.reset();
+                })
+                .catch(err => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Something went wrong!",
+                    });
+                    console.log(err);
+                })
+        }
     }
     const handleGoogleLogin = () => {
         loginWithGoogle()
             .then(res => {
+                setError("");
                 console.log(res.user);
                 Swal.fire({
                     position: "top-end",
@@ -152,7 +169,11 @@ const Register = () => {
                             </svg>
                             Register with Google
                         </button>
-
+                        <p className="text-center">
+                            <small>
+                                {error}
+                            </small>
+                        </p>
                         {/* Login link */}
                         <p className="text-center text-sm mt-4 text-base-content/70">
                             Already have an account?{" "}
