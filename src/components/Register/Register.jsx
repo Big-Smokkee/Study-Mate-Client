@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { AuthContext } from "../../context/AuthContext";
 
 const Register = () => {
-    const { signUpUserWithEmailAndPassword } = use(AuthContext);
+    const { signUpUserWithEmailAndPassword, loginWithGoogle } = use(AuthContext);
     const handleRegister = (e) => {
         e.preventDefault();
         const name = e.target.name.value;
@@ -14,6 +14,15 @@ const Register = () => {
         console.log(newUser);
 
         signUpUserWithEmailAndPassword(email, password)
+            .then(res => {
+                console.log(res.user);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    const handleGoogleLogin = () => {
+        loginWithGoogle()
             .then(res => {
                 console.log(res.user);
             })
@@ -81,7 +90,7 @@ const Register = () => {
                             Register
                         </button>
                         {/* Google */}
-                        <button className="btn w-full btn-outline rounded-lg font-medium">
+                        <button className="btn w-full btn-outline rounded-lg font-medium" onClick={handleGoogleLogin} type="button">
                             <svg
                                 aria-label="Google logo"
                                 width="16"
