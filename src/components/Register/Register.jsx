@@ -27,15 +27,16 @@ const Register = () => {
                         });
                     })
                     .catch(() => {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Something went wrong!",
-                        });
+
                     })
                 setUser(res.user);
             })
             .catch(err => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
                 console.log(err);
             })
     }
