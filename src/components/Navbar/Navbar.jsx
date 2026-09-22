@@ -1,9 +1,11 @@
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { use, useEffect, useState } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import Swal from "sweetalert2";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 const Navbar = () => {
-    const { user } = use(AuthContext);
+    const { user, setUser, signoutAnUser, loading, setLoading } = use(AuthContext);
     const links = <div className="flex">
         <li><NavLink to='/'>Home</NavLink></li>
         <li><NavLink to='/find-partners'>Find Partners</NavLink></li>
@@ -15,11 +17,11 @@ const Navbar = () => {
         }
     </div>
     const buttons = <div className=" flex gap-x-2">
-        <a className="btn">Login</a>
-        <a className="btn">Register</a>
+        <Link className="btn" to='/login'>Login</Link>
+        <Link className="btn" to='/register'>Register</Link>
     </div>
     const [theme, setTheme] = useState(
-        localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+        localStorage.getItem("theme") ? localStorage.getItem("theme") : "lemonade"
     );
     useEffect(() => {
         localStorage.setItem("theme", theme);
@@ -27,13 +29,34 @@ const Navbar = () => {
     }, [theme]);
     const handleThemeController = (e) => {
         if (e.target.checked) {
-            setTheme("dark");
+            setTheme("luxury");
         } else {
-            setTheme("light");
+            setTheme("lemonade");
         }
     }
+    console.log(user);
+    const handleLogout = () => {
+        signoutAnUser()
+            .then(() => {
+                Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Logout Successfull!",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setUser(null);
+                setLoading(false);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }
+    if (loading) {
+        return <LoadingScreen></LoadingScreen>
+    }
     return (
-        <div className="navbar bg-base-100 shadow-sm">
+        <div className="navbar bg-base-100  border-b rounded-2xl shadow-2xl border-b-gray-300">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -68,7 +91,7 @@ const Navbar = () => {
                         <path
                             d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
                     </svg>
-                    <input type="checkbox" value="synthwave" className="toggle theme-controller" onClick={handleThemeController} />
+                    <input type="checkbox" value="luxury" className="toggle theme-controller" onClick={handleThemeController} />
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="20"
@@ -87,15 +110,15 @@ const Navbar = () => {
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <img
-                                    alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                    alt="User Photo"
+                                    src={user?.photoURL} />
                             </div>
                         </div>
                         <ul
                             tabIndex={-1}
                             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                             <li><a>Profile</a></li>
-                            <li><a>Logout</a></li>
+                            <li><a onClick={handleLogout}>Logout</a></li>
                         </ul>
                     </div> : buttons
                 }
