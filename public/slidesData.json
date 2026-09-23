@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "Find Your Ideal Study Partner",
+    "image": "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80",
+    "features": [
+      { "name": "Smart Matching", "desc": "Connect with peers based on courses." },
+      { "name": "Department Filters", "desc": "Find partners in your exact batch." },
+      { "name": "Live Discussion", "desc": "Collaborate via real-time chat." }
+    ],
+    "rightTitle": "Peer Collaboration Network",
+    "rightDesc": "Stop studying alone. Connect with high-performing students in your department, schedule study sessions, and prepare for exams together.",
+    "buttonText": "Find a Partner",
+    "stats": [
+      { "label": "Active Students", "value": "10K+" },
+      { "label": "Match Rate", "value": "98%" },
+      { "label": "User Rating", "value": "4.9/5" }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Resource Sharing & Collaborative Notes",
+    "image": "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
+    "features": [
+      { "name": "Shared Repositories", "desc": "Access verified course material." },
+      { "name": "Interactive Quizzes", "desc": "Test your skills with custom quizzes." },
+      { "name": "Digital Flashcards", "desc": "Memorize key concepts faster." }
+    ],
+    "rightTitle": "Curated Knowledge Base",
+    "rightDesc": "Access thousands of community-curated study notes, past question solutions, and flashcards uploaded by top-ranking students.",
+    "buttonText": "Browse Resources",
+    "stats": [
+      { "label": "Shared Notes", "value": "50K+" },
+      { "label": "Universities", "value": "120+" },
+      { "label": "Free Access", "value": "100%" }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Track Goals & Ace Your Exams",
+    "image": "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80",
+    "features": [
+      { "name": "Virtual Study Rooms", "desc": "Pomodoro timers for group focus." },
+      { "name": "Deadline Tracker", "desc": "Never miss assignment submissions." },
+      { "name": "Progress Analytics", "desc": "Visualize your daily study habits." }
+    ],
+    "rightTitle": "Productivity Suite",
+    "rightDesc": "Stay disciplined with group focus timers, set weekly academic milestones, and track your study progression in real time.",
+    "buttonText": "Start Studying",
+    "stats": [
+      { "label": "Success Rate", "value": "95%" },
+      { "label": "Study Groups", "value": "500+" },
+      { "label": "Virtual Rooms", "value": "24/7" }
+    ]
+  }
+]

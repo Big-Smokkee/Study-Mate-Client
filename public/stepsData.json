@@ -1,0 +1,30 @@
+[
+  {
+    "id": "01",
+    "title": "Find Study Partners",
+    "description": "Search by subject using keyword matching or filter profiles by experience levels to find your ideal learning partner.",
+    "icon": "svg-code-here",
+    "badge": "Flow C: Search & Filter"
+  },
+  {
+    "id": "02",
+    "title": "Send Partner Request",
+    "description": "Click to send a request. Our system checks duplicate requests instantly and updates the partner counter dynamically.",
+    "icon": "svg-code-here",
+    "badge": "Flow B: Smart Requests"
+  },
+  {
+    "id": "03",
+    "title": "Manage Connections",
+    "description": "Track your outgoing requests, update details, or remove connections seamlessly with SweetAlert confirmation.",
+    "icon": "svg-code-here",
+    "badge": "Flow D: Update & Delete"
+  },
+  {
+    "id": "04",
+    "title": "Secure Session Always",
+    "description": "Firebase auth listener ensures your private routes stay protected even when refreshing the browser page.",
+    "icon": "svg-code-here",
+    "badge": "Flow A: Protected Routes"
+  }
+]
